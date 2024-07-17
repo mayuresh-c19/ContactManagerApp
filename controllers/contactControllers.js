@@ -1,10 +1,12 @@
 const asyncHandler = require("express-async-handler");
+const Contact = require("../models/contactModel");
 
 //@desc get all contacts
 //@route GET /api/contacts
 //@access public
 const getContacts = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "Get All Contacts" });
+    const contacts = await Contact.find();
+  res.status(200).json(contacts);
 });
 
 //@desc get Individual contact
@@ -24,7 +26,13 @@ const createContact = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("All Fields are Madatory");
   }
-  res.status(201).json({ message: "Create Contact" });
+
+  const contact = await Contact.create({
+    name,
+    email,
+    phone,
+  })
+  res.status(201).json(contact);
 });
 
 //@desc Update contact
