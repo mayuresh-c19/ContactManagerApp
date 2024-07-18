@@ -71,7 +71,9 @@ const deleteContact = asyncHandler(async (req, res) => {
   }
 
   await Contact.deleteOne(contact);
-  res.status(200).json({ message: `Deleted Contact of ${contact.name}` });
+  res
+    .status(200)
+    .json({ message: `Deleted Contact of ${contact.name}` });
 });
 
 module.exports = {
