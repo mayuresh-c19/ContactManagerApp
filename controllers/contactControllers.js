@@ -1,6 +1,5 @@
 const asyncHandler = require("express-async-handler");
 const Contact = require("../models/contactModel");
-const { constants } = require("../constants");
 
 //@desc get all contacts
 //@route GET /api/contacts
@@ -54,10 +53,11 @@ const updateContact = asyncHandler(async (req, res) => {
   const updatedContact = await Contact.findByIdAndUpdate(
     req.params.id,
     req.body,
-    {new : true}
+    { new: true }
   );
-  res.status(200).json(updatedContact);
-  console.log("Contact Updated to :",req.body.name);
+  res
+    .status(200)
+    .json({ message: `Contact Updated of ${updatedContact.name}` });
 });
 
 //@desc Delete contact
@@ -73,11 +73,11 @@ const deleteContact = asyncHandler(async (req, res) => {
   const deletedContact = await Contact.findByIdAndDelete(
     req.params.id,
     req.body,
-    {new : true}
+    { new: true }
   );
-  console.log("Deleted Contact of : ", req.body.name);
-  res.status(200).json({"message" : `Deleted Contact of ${deletedContact.name}`});
-  
+  res
+    .status(200)
+    .json({ message: `Deleted Contact of ${deletedContact.name}` });
 });
 
 module.exports = {
