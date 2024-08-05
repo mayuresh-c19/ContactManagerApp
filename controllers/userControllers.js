@@ -21,8 +21,25 @@ const registerUser = asyncHandler(async (req,res) =>{
 
   // Hash Password
   const hashedPassword = await bcrypt.hash(password,10);
-  console.log(hashedPassword);
-  res.status(200).json({message : "User Registered SuccessFully"});
+  console.log("Hashed Password : ",hashedPassword);
+
+  const user = await User.create({
+    username,
+    email,
+    password : hashedPassword,
+  });
+
+  console.log(`User Created SuccessFully : ${user}`);
+  if(user){
+    res.status(201).json({
+      _id: user.id , 
+      email: user.email,
+      message: "User Registered Successfully",
+    });
+  }else{
+    res.status(400);
+    throw new Error("User Data is Not Valid");
+  }
 });
 
 //@desc Login a user
