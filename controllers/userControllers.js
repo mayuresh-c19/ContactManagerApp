@@ -70,12 +70,13 @@ const loginUser = asyncHandler(async (req,res) =>{
       process.env.ACCESS_TOKEN_SECRET,
       {expiresIn : "1m"}
     );
-    res.status(200).json({message : "User Login SuccessFull"});
+    res.status(200).json({accessToken});
   }else{
     res.status(401);
     throw new Error("Email or Password is not valid");
   }
-})
+
+});
 
 //@desc Login a user
 //@route GET /api/users/current
